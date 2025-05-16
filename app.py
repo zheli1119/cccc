@@ -1,5 +1,6 @@
 import os
 from flask import Flask, request, jsonify
+from fastapi import FastAPI
 from collections import deque
 
 from dotenv import load_dotenv
@@ -26,6 +27,13 @@ def get_updates():
     updates = list(queue)
     queue.clear()
     return jsonify({"updates": updates})
+
+app = FastAPI()
+
+@app.get("/")
+async def read_root():
+    return {"message": "Hello, world!"}
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
